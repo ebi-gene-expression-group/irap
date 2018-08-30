@@ -4,7 +4,7 @@ FROM ubuntu:16.04
 # and install missing packages
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV IRAP_VERSION=1.0.0b-geg
+ENV IRAP_VERSION=1.0.0b2-geg
 
 LABEL iRAP.version="$IRAP_VERSION" maintainer="nuno.fonseca at gmail.com"
 
