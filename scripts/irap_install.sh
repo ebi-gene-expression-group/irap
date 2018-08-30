@@ -23,8 +23,6 @@ install=all
 IRAP_DIR1=
 SRC_DIR=
 
-IRAP_VERSION=$(cat $IRAP_DIR/version)
-
 #
 USE_CACHE=y
 #############
@@ -2205,7 +2203,6 @@ else
 fi
 
 # 
-pinfo "iRAP $IRAP_VERSION"
 # Check if env is available
 DEF_ENV="/usr/bin/env"
 ENV_FP=$DEF_ENV
@@ -2229,6 +2226,8 @@ pinfo "Checking paths..."
 #IRAP_DIR=$(realpath -f "$IRAP_DIR")
 IRAP_DIR=$(readlink -f "$IRAP_DIR")
 SRC_DIR=$(readlink -f "$SRC_DIR")
+IRAP_VERSION=$(cat $SRC_DIR/version)
+pinfo "iRAP $IRAP_VERSION"
 pinfo "Checking paths...done."
 #############################################
 # print a few variables to help troubleshooting
