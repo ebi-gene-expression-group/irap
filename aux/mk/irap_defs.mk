@@ -121,8 +121,8 @@ annot_tsv=off
 de_method?=deseq2
 # deseq2 with independent filtering
 deseq2_params=--independent-filtering
-quant_method?=htseq2
-mapper?=tophat2
+quant_method?=featurecounts
+mapper?=hisat2
 exon_quant?=y
 exon_quant_method=dexseq
 quant_norm_method?=fpkm
