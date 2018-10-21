@@ -1003,12 +1003,15 @@ $(info *	max_threads=$(max_threads))
 # by default kallisto threads = max_threads
 kallisto_threads?=$(max_threads)
 
-# by default the value is the read length
-kallisto_se_fragment_length?=
-kallisto_se_sd?=1
+# By default set fragment length to 200, sd to 30, as per Kallisto's author's
+# suggetion of typical values (see https://www.biostars.org/p/252823/). Neither
+# of these parameters can be estimated from single-end data, and they bear no
+# relation to read length.
+
+kallisto_se_fragment_length?=200
+kallisto_se_sd?=30
 #kallisto_pe_frag_length?=
 #kallisto_pe_sd?=
-
 
 #********************
 # Temporary directory
