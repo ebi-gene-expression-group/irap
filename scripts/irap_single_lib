@@ -623,7 +623,8 @@ pinfo "Stats...complete."
 #################################################################
 # BAM->CRAM
 set -e
-BAM=`$cmd $irap_single_lib_options $irap_options print_bam_filenames|tail -n 1|grep -v "make:"`
+# Pick the coordinate sorted bam as the final result, excluding 'byname'
+BAM=`$cmd $irap_single_lib_options $irap_options print_bam_filenames|grep -v "byname"|tail -n 1|grep -v "make:"`
 if [ "$BAM-" == "-" ]; then
     run_AND_timeIt "iRAP-CRAM" $time_log_file  echo no bam no cram
 else
