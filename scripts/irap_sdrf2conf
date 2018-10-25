@@ -301,7 +301,7 @@ sc.exp.comment.cols <- c("LIBRARY_STRAND")
 sc.exp.factor.cols <- c("single cell identifier")
 sc.exp.factor.cols <- c()
 sc.exp.characteristic.cols <- c()
-sc.opt.cols <- c("single cell quality","input molecule","end bias","single cell library method","read1 file","read2 file","index1 file")
+sc.opt.cols <- c("single cell quality","input molecule","end bias","single cell library method","read1 file","read2 file","index1 file", "index2 file","index3 file")
 
 #optional.cols <- c("")
 
@@ -464,9 +464,7 @@ if ( sin %in% colnames(sdrf) ) {
 layout.cols <- c("run","library_layout","ena_sample","library_layout","library_strand","technical replicate group")
 if ( opt$is_sc ) {
     layout.cols <- append(layout.cols,c("single cell identifier"))
-    ## add a few extra columns
-    opt.cols <- c("read1 file","read2 file","index1 file","index2 file","index3 file")
-    layout.cols  <- append(layout.cols,intersect(normalize.cols(opt.cols),colnames(sdrf)))
+    layout.cols  <- append(layout.cols,intersect(normalize.cols(sc.opt.cols),colnames(sdrf)))
 }
 
 layout.cols <- unique(normalize.cols(layout.cols,FALSE))
