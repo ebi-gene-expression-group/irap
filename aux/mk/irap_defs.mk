@@ -31,7 +31,7 @@ ifdef atlas_run
 $(info * atlas_run mode (overriding some options))
 raw_folder=$(name)_$(species)
 sop?=
-kallisto_se_sd=200
+kallisto_se_sd=30
 kallisto_se_fragment_length=200
 ifneq ($(sop),atlas_te)
 override sop=atlas
@@ -108,7 +108,7 @@ spikein_fasta?=ERCC
 ##
 
 ## 
-kallisto_se_sd=200
+kallisto_se_sd=30
 kallisto_se_fragment_length=200
 
 # Count-based method iRAP must use internally for single cell, e.g. before
