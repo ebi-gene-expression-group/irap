@@ -31,8 +31,12 @@ ifdef atlas_run
 $(info * atlas_run mode (overriding some options))
 raw_folder=$(name)_$(species)
 sop?=
+kallisto_se_sd=30
+kallisto_se_fragment_length=200
 ifneq ($(sop),atlas_te)
-override sop=atlas
+  ifneq ($(sop),atlas2018)
+    override sop=atlas
+  endif
 endif
 endif
 
@@ -105,6 +109,10 @@ user_trans_biotypes:=protein_coding|lincRNA
 spikein_fasta?=ERCC
 ##
 
+## 
+kallisto_se_sd=30
+kallisto_se_fragment_length=200
+
 # Count-based method iRAP must use internally for single cell, e.g. before
 # clustering
 quant_norm_libsize_tool?=scran
@@ -113,6 +121,7 @@ quant_norm_libsize_method?=scran_gene
 ## get tsne
 sc_quant_viz:=tsne
 endif
+
 
 ifeq ($(sop),atlas)
 $(info * SOP=Expression Atlas)
@@ -125,6 +134,37 @@ quant_method?=htseq2
 mapper?=tophat2
 exon_quant?=y
 exon_quant_method=dexseq
+quant_norm_method?=fpkm
+quant_norm_tool?=irap
+transcript_quant?=n
+dt_fc=no
+
+ifdef big_genome
+do_not_use_star?=n
+ifneq ($(do_not_use_star),y)
+$(info * Big genome, overriding mapper: $(mapper) -> star)
+mapper:=star
+# set the options to reduce the number of memory needed at the expense of mapping speed
+star_index_options=--genomeChrBinNbits 15  --genomeSAsparseD 2 --limitGenomeGenerateRAM 128000000000
+else
+$(info * Using alternative Atlas SOP for big genomes (mapper=$(mapper)))
+endif
+endif
+endif
+
+
+
+ifeq ($(sop),atlas2018)
+$(info * SOP=Expression Atlas)
+# no need for annotation 
+annot_tsv=off
+de_method?=deseq2
+# deseq2 with independent filtering
+deseq2_params=--independent-filtering
+quant_method?=featurecounts
+mapper?=hisat2
+exon_quant?=y
+exon_quant_method=featurecounts
 quant_norm_method?=fpkm
 quant_norm_tool?=irap
 transcript_quant?=n

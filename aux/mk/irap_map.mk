@@ -362,7 +362,7 @@ endef
 endif
 
 define run_hisat2_index=
-	irap_map.sh HISAT2  hisat2-build $(hisat2_index_params) $(1) $(1)
+	irap_map.sh HISAT2  hisat2-build $(hisat2_index_params) $(1) $(1) && touch $(1).ht2indexed
 endef
 
 # 1 - GTF
@@ -395,7 +395,7 @@ endef
 
 # same arguments used for *_index
 define hisat2_index_filename=
-$(2).1.ht2
+$(2).ht2indexed
 endef
 
 define hisat2_trans_index_filename=
@@ -412,7 +412,7 @@ hisat2_reference_prefix=$(reference_prefix)
 # hisat2
 define run_hisat2_map=
         $(call hisat2_setup_dirs,$(1)) && \
-	irap_map.sh HISAT2 hisat2   -p $(max_threads) --met-file $(call lib2bam_folder,$(1))$(1).hisat2.metrics  $(hisat2_map_params) $(if $($(1)_rgid),--rg-id "$($(1)_rgid)")  $(call runtime_splicing_params,$(hisat2_reference_prefix),$(3))   $(hisat2_reference_prefix) $(call hisat2_file_params,$(1),$(2)) -S $(call lib2bam_folder,$(1))$(1)/$(1).tmp.sam &&\
+	irap_map.sh HISAT2 hisat2   -p $(max_threads) --met-file $(call lib2bam_folder,$(1))$(1).hisat2.metrics  $(hisat2_map_params) $(if $($(1)_rgid),--rg-id "$($(1)_rgid)")  $(call runtime_splicing_params,$(hisat2_reference_prefix),$(3)) -x $(hisat2_reference_prefix) $(call hisat2_file_params,$(1),$(2)) -S $(call lib2bam_folder,$(1))$(1)/$(1).tmp.sam &&\
 	samtools view --threads $(max_threads)   -bS  $(call lib2bam_folder,$(1))$(1)/$(1).tmp.sam >  $(call lib2bam_folder,$(1))$(1)/$(1).tmp.bam  && \
 	irap_bam_fixSQ_order $(call lib2bam_folder,$(1))$(1)/$(1).tmp.bam $(call lib2bam_folder,$(1))$(1)/$(1).tmp2.bam && \
 	rm -f  $(call lib2bam_folder,$(1))$(1)/$(1).tmp.bam $(call lib2bam_folder,$(1))$(1)/$(1).tmp.sam $(call lib2bam_folder,$(1))$(1)/$(1).0{0,1,2,3,4,5,6,7,8,9}*.bam && \
@@ -1065,10 +1065,11 @@ define run_kallisto_index=
 	touch $(call kallisto_index_filename)
 endef
 
+
 # should be used for single cell only
 define run_kallisto_map=
 	$(call tophat_setup_dirs,$(1))
-	irap_wrapper.sh kallisto kallisto quant $(if $(call is_pe_lib,$(1)),,--single -l 200 -s 200)  $(call kallisto_strand_params,$(1))  $(kallisto_map_params) -i $(call kallisto_index_prefix) -o $(call lib2bam_folder,$(1))$(1)/ $(2)   && \
+	irap_wrapper.sh kallisto kallisto quant $(if $(call is_pe_lib,$(1)),,--single -l $(kallisto_se_fragment_length) -s $(kallisto_se_sd))  $(call kallisto_strand_params,$(1))  $(kallisto_map_params) -i $(call kallisto_index_prefix) -o $(call lib2bam_folder,$(1))$(1)/ $(2)   && \
 	$(call do_post_process_trans_bam_cmd,$(call lib2bam_folder,$(1))$(1)/pseudoalignments.bam, $(call lib2bam_folder,$(1))$(1)/$(1).tmp.bam) &&\
 	samtools sort --threads $(max_threads) -m $(SAMTOOLS_SORT_MEM_MT) -T $(call lib2bam_folder,$(1))$(1)/$(1) -o $(call lib2bam_folder,$(1))$(1)/$(1).bam $(call lib2bam_folder,$(1))$(1)/$(1).tmp.bam && \
 	$(call bam_rehead,$(call lib2bam_folder,$(1))$(1)/$(1).bam,$(1)) && \

@@ -88,8 +88,9 @@ function download {
 	ln -s $SRC_DIR/download/$FILE2 .
     else
 	set +e
-	if [ $OS == "linux" ]; then	    
-	    wget  --no-check-certificate -c -nc -L "$FILE2DOWNLOAD" -O $FILE2
+	if [ $OS == "linux" ]; then
+	    # -L
+	    wget  --no-check-certificate -c -nc  "$FILE2DOWNLOAD" -O $FILE2
 	else
 	    curl $FILE2DOWNLOAD
 	fi
@@ -218,7 +219,7 @@ SOAPsplice_URL=http://soap.genomics.org.cn/down/$SOAPsplice_FILE
 SOAP2_VERSION=2.21
 SOAP2_FILE=soap${SOAP2_VERSION}release.tar.gz
 SOAP2_URL=http://soap.genomics.org.cn/down/$SOAP2_FILE
-# 2.4.0i->2.5.0c->2.5.3
+# 2.4.0i->2.5.0c->2.5.3->2.5.4b
 STAR_VERSION=2.5.4b
 STAR_FILE=${STAR_VERSION}.tar.gz
 STAR_URL=https://github.com/alexdobin/STAR/archive/$STAR_FILE
@@ -274,8 +275,8 @@ R2_FILE=R-${R2_VERSION}.tar.gz
 R2_URL=http://cran.r-project.org/src/base/R-2/$R2_FILE
 
 # 3.xx fails to compile due to pcre dependency
-# 3.2.5 -> 3.4.3
-R3_VERSION=3.4.3
+# 3.2.5 -> 3.4.3 -> 3.5.1
+R3_VERSION=3.5.1
 R3_FILE=R-${R3_VERSION}.tar.gz 
 R3_URL=http://cran.r-project.org/src/base/R-3/$R3_FILE
 
@@ -284,18 +285,19 @@ SAMTOOLS_VERSION=0.1.19
 SAMTOOLS_FILE=samtools-$SAMTOOLS_VERSION.tar.bz2
 SAMTOOLS_URL=http://sourceforge.net/projects/samtools/files/samtools/$SAMTOOLS_VERSION/$SAMTOOLS_FILE
 
-# new samtools: 1.3-> 1.6
-SAMTOOLS1_VERSION=1.6
+# new samtools: 1.3-> 1.6 -> 1.9
+SAMTOOLS1_VERSION=1.9
 SAMTOOLS1_FILE=samtools-$SAMTOOLS1_VERSION.tar.bz2
 SAMTOOLS1_URL=http://sourceforge.net/projects/samtools/files/samtools/$SAMTOOLS1_VERSION/$SAMTOOLS1_FILE
 
-VCFTOOLS_VERSION=0.1.15
+# 0.1.15->0.1.16
+VCFTOOLS_VERSION=0.1.16
 VCFTOOLS_FILE=vcftools-$VCFTOOLS_VERSION.tar.gz
 VCFTOOLS_URL=https://github.com/vcftools/vcftools/releases/download/v$VCFTOOLS_VERSION/$VCFTOOLS_FILE
 
 
 # 1.3->1.6
-BCFTOOLS_VERSION=1.6
+BCFTOOLS_VERSION=1.9
 BCFTOOLS_FILE=bcftools-$BCFTOOLS_VERSION.tar.bz2
 BCFTOOLS_URL=https://github.com/samtools/bcftools/releases/download/$BCFTOOLS_VERSION/$BCFTOOLS_FILE
 
@@ -341,7 +343,8 @@ BitSeq_URL=https://github.com/BitSeq/BitSeq/archive/$BitSeq_FILE
 #MMSEQ_FILE=mmseq_${MMSEQ_VERSION}.zip
 #MMSEQ_URL=http://www.bgx.org.uk/software/$MMSEQ_FILE
 
-htseq_VERSION=0.8.0
+# 0.8.0 -> 0.11.0
+htseq_VERSION=0.11.0
 htseq_FILE=release_${htseq_VERSION}.tar.gz
 htseq_URL=https://github.com/simon-anders/htseq/archive/${htseq_FILE}
 
@@ -370,9 +373,9 @@ Sailfish_FILE=SailfishBeta-${Sailfish_VERSION}_CentOS5.tar.gz
 #Sailfish_URL=http://github.com/kingsfordgroup/sailfish/archive/$Sailfish_FILE
 Sailfish_URL=http://github.com/kingsfordgroup/sailfish/releases/download/v$Sailfish_VERSION/$Sailfish_FILE
 
-# 0.7.2 -> 0.9.1
-SALMON_VERSION=0.9.1
-SALMON_FILE=Salmon-${SALMON_VERSION}_linux_x86_64.tar.gz
+# 0.7.2 -> 0.9.1->0.11.3
+SALMON_VERSION=0.11.3
+SALMON_FILE=Salmon-${SALMON_VERSION}-linux_x86_64.tar.gz
 SALMON_URL=https://github.com/COMBINE-lab/salmon/releases/download/v${SALMON_VERSION}/${SALMON_FILE}
 
 # kallisto - 0.42.1 -> 0.44.0 (multithreads)
@@ -380,8 +383,8 @@ kallisto_VERSION=0.44.0
 kallisto_FILE=kallisto_linux-v$kallisto_VERSION.tar.gz
 kallisto_URL=https://github.com/pachterlab/kallisto/releases/download/v$kallisto_VERSION/$kallisto_FILE
 
-# 1.2.21->1.2.22->1.3.0
-rsem_VERSION=1.3.0
+# 1.2.21->1.2.22->1.3.0->1.3.1
+rsem_VERSION=1.3.1
 rsem_FILE=v${rsem_VERSION}.tar.gz
 rsem_URL=https://github.com/deweylab/RSEM/archive/$rsem_FILE
 
@@ -390,10 +393,11 @@ FUSIONMAP_VERSION=2015-03-31
 FUSIONMAP_FILE=FusionMap_${FUSIONMAP_VERSION}.zip
 FUSIONMAP_URL=http://omicsoft.com/fusionmap/Software/$FUSIONMAP_FILE
 
-FUSIONCATCHER_VERSION=0.99.7b
+FUSIONCATCHER_VERSION=1.00
 FUSIONCATCHER_FILE=bootstrap.py
 
 FUSIONCATCHER_URL=http://sf.net/projects/fusioncatcher/files/$FUSIONCATHER_FILE
+
 
 SCRIPTURE_VERSION=beta2
 SCRIPTURE_FILE=scripture-${SCRIPTURE_VERSION}.jar 
@@ -449,12 +453,12 @@ PICARD_VERSION=2.9.2
 PICARD_FILE=picard-tools-$PICARD_VERSION.zip
 PICARD_URL=http://sourceforge.net/projects/picard/files/picard-tools/$PICARD_VERSION/$PICARD_FILE/download
 
-FEATURECOUNTS_VERSION=1.6.0
-FEATURECOUNTS_FILE=subread-$FEATURECOUNTS_VERSION-Linux-x86_64.tar.gz
-FEATURECOUNTS_URL=https://sourceforge.net/projects/subread/files/subread-$FEATURECOUNTS_VERSION/$FEATURECOUNTS_FILE/download
+## 1.6.0 -> 1.6.2
+FeatureCounts_VERSION=1.6.2
+FEATURECOUNTS_FILE=subread-$FeatureCounts_VERSION-Linux-x86_64.tar.gz
+FEATURECOUNTS_URL=https://sourceforge.net/projects/subread/files/subread-$FeatureCounts_VERSION/$FEATURECOUNTS_FILE/download
 
-
-fastq_utils_VERSION=0.14.7
+fastq_utils_VERSION=0.16.3
 fastq_utils_FILE=$fastq_utils_VERSION.tar.gz
 fastq_utils_URL=https://github.com/nunofonseca/fastq_utils/archive/$fastq_utils_FILE
 
@@ -463,7 +467,7 @@ umis_VERSION=0.7.0
 umis_FILE=v${umis_VERSION}.tar.gz
 umis_URL=https://github.com/vals/umis/archive/${umis_FILE}
 
-MAKE_VERSION=4.2
+MAKE_VERSION=4.2.1
 MAKE_FILE=make-${MAKE_VERSION}.tar.gz
 MAKE_URL=http://ftp.gnu.org/gnu/make/$MAKE_FILE
 ##################################
@@ -963,7 +967,8 @@ function R_install {
     CFLAGS=$CFLAGS_noboost $SPECIAL_SH_TO_USE ./configure --prefix=$IRAP_DIR
     make clean
     make -j $J
-    make -j $J check
+    # 
+    #make -j $J check
     make install
     popd
     # wrappers
@@ -1003,7 +1008,7 @@ function YAP_install {
     pushd mainline
     # cleanup
     rm -rf $IRAP_DIR/include/Yap $IRAP_DIR/share/Yap $IRAP_DIR/lib/Yap $IRAP_DIR/lib/libYap*
-    CXXFLAGS= CFLAGS=  ./configure --prefix=$IRAP_DIR --disable-myddas --disable-horus
+    CXXFLAGS= CFLAGS=  ./configure --prefix=$IRAP_DIR --disable-myddas --disable-horus --with-python=no --with-mpi=no --with-r=no --disable-horus --disable-clpbn
     CXXFLAGS=  CFLAGS=  make clean
     CXXFLAGS=  CFLAGS=  make
     CXXFLAGS=  CFLAGS=  make install
@@ -1014,7 +1019,14 @@ function YAP_install {
 function deps_install {
 
     pinfo "Installing dependencies (make, perl, boost, gnuplot, R, samtools, ...)"
-    make_install
+    # only install make if the version available is not acceptable
+    local v=`make --version 2> /dev/null|head -n 1 | cut -f3 -d\ |cut -f 1,2 -d.`
+    if [ "$v-" == "-" ] || [ $v \< 4.2 ]; then
+	make_install
+    else
+	pinfo "make found ($v) - skipping installation"
+    fi
+
     zlib_install
     perl_install
     #ruby_install
@@ -1071,8 +1083,8 @@ function samtools1_install {
     make prefix=$IRAP_DIR install
     mkdir -p $INC_DIR/bam
     cp *.h $INC_DIR/bam
-    mkdir  -p $INC_DIR/bam/htslib-1.6
-    cp htslib-1.6/*.h $INC_DIR/bam/htslib-1.6
+    mkdir  -p $INC_DIR/bam/htslib-1.9
+    cp htslib-1.9/*.h $INC_DIR/bam/htslib-1.9
     cp libbam.a $INC_DIR/bam
     #
     pwd
@@ -1543,7 +1555,7 @@ function salmon_install {
     pinfo "Installing salmon..."
     download_software SALMON
     tar xzvf $SALMON_FILE
-    pushd Salmon-latest_linux_x86_64
+    pushd salmon-$SALMON_VERSION-linux_x86_64
     mkdir -p $IRAP_DIR/bin/salmon/bin $IRAP_DIR/bin/salmon/lib
     cp bin/* $IRAP_DIR/bin/salmon/bin
     cp lib/* $IRAP_DIR/bin/salmon/lib
@@ -1556,7 +1568,7 @@ function fastq_utils_install {
     download_software fastq_utils
     tar xzvf $fastq_utils_FILE
     pushd fastq_utils-${fastq_utils_VERSION}
-    CFLAGS_noboost=$(get_CFLAGS_woBOOST)
+    #CFLAGS_noboost=$(get_CFLAGS_woBOOST)
     ##CFLAGS=$CFLAGS_noboost ./install_deps.sh
     CFLAGS=  ./install_deps.sh
     make install
@@ -1643,11 +1655,7 @@ function quant_install {
     pinfo "To install fusionmap run: irap_install.sh -s . -x fusionmap"
     pinfo "To install fusioncatcher run: irap_install.sh -s . -x fusioncatcher"
     pinfo "To install scripture run: irap_install.sh -s . -x scripture"
-    
-    # scripture_install
-    # fusionmap_install
-    # fusioncatcher
-
+    pinfo "To install bitseq run: irap_install.sh -s . -x bitseq"
 }
 
 ######################################################
@@ -1986,10 +1994,15 @@ function fusioncatcher_install {
 
     pinfo "Installation of FusionCather..."
     download_software FUSIONCATCHER
-    pip install --prefix $IRAP_DIR  biopython 
-    python $FUSIONCATCHER_FILE -a -y --download -p $IRAP_DIR
+    pinfo "Installing dependencies: biopython numpy xlrd openpyxl setuptools..."
+    pip install --prefix $IRAP_DIR  biopython numpy xlrd openpyxl setuptools
+    pinfo "Installing biopython...done."
+    pinfo "Installing fusioncatcher..."
+    ## skip checking if dependencies are installed (-s)
+    python $FUSIONCATCHER_FILE --skip-dependencies  -y --download -p $IRAP_DIR
     pinfo "FusionCatcher installation complete."    
 }
+
 
 
 ######################################
@@ -2031,7 +2044,11 @@ function python_packages_install {
     set -e
     CFLAGS_bak=$CFLAGS
     export CFLAGS=`echo $CFLAGS|sed -E "s|\-I[^ ]*boost||g"`
-    if [ "$PATH2PIP-" == "-" ]; then
+    PIPVERSION=0
+    if [ "$PATH2PIP-" != "-" ] ; then
+	PIPVERSION=$(pip -V |cut -f 2 -d\ |cut -f 1 -d\.)
+    fi
+    if [ "$PATH2PIP-" == "-" ] || [ $PIPVERSION -lt 10 ]; then
 	wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py
 	python get-pip.py --user
 	PATH2PIP=$IRAP_DIR/python/bin/pip
@@ -2100,7 +2117,7 @@ function featurecounts_install {
     pinfo "Installing subread/feature counts..."
     download_software FEATURECOUNTS
     tar xzvf $FEATURECOUNTS_FILE
-    mv subread-$FEATURECOUNTS_VERSION-Linux-x86_64/bin/* $BIN_DIR
+    mv subread-$FeatureCounts_VERSION-Linux-x86_64/bin/* $BIN_DIR
     pinfo "FeatureCounts installed"    
 }
 

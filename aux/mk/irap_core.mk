@@ -1000,6 +1000,19 @@ ifndef max_threads
 endif
 $(info *	max_threads=$(max_threads))
 
+# by default kallisto threads = max_threads
+kallisto_threads?=$(max_threads)
+
+# By default set fragment length to 200, sd to 30, as per Kallisto's author's
+# suggetion of typical values (see https://www.biostars.org/p/252823/). Neither
+# of these parameters can be estimated from single-end data, and they bear no
+# relation to read length.
+
+kallisto_se_fragment_length?=200
+kallisto_se_sd?=30
+#kallisto_pe_frag_length?=
+#kallisto_pe_sd?=
+
 #********************
 # Temporary directory
 #********************
@@ -1878,7 +1891,7 @@ STAGE1_S_TARGETS?=
 
 ifneq ($(mapper),none)
 
-bam_files:=$(foreach p,$(pe), $(call lib2bam_folder,$(p))$(p).pe.hits.byname.bam) $(foreach s,$(se), $(call lib2bam_folder,$(s))$(s).se.hits.bam)
+bam_files:=$(foreach p,$(pe), $(call lib2bam_folder,$(p))$(p).pe.hits.bam) $(foreach s,$(se), $(call lib2bam_folder,$(s))$(s).se.hits.bam)
 STAGE2BYNAME_OUT_FILES:=$(subst .hits.bam,.hits.byname.bam,$(bam_files))
 
 else
