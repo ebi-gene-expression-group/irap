@@ -1,5 +1,4 @@
 # Shell functions used in iRAP scripts
-STDERR=/dev/stderr
 ################################################################
 # IO
 function pinfo { 
@@ -7,11 +6,11 @@ function pinfo {
 }
 
 function perror { 
-    echo "[ERROR: $*]" >> $STDERR
+    echo "[ERROR: $*]" 1>&2
 }
 
 function pwarning { 
-    echo "[WARNING: $*]" >> $STDERR
+    echo "[WARNING: $*]" 1>&2
 }
 
 ###############################################################
