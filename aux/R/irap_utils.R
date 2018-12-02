@@ -28,6 +28,8 @@ if ( IRAP.DIR == "" ) {
   q(status=1)
 }
 
+irap_version <- readLines(file.path(IRAP.DIR, 'version'))
+
 options(datatable.fread.input.cmd.message=FALSE)
 
 # PATH to the CSS file used in all HTML reports
@@ -1906,7 +1908,7 @@ conf.is.qc.enabled <- function(conf) {
 }
 
 conf.get.default.value <- function(var) {
-  cmd <- paste0("grep -i '^def_",var,"' ",IRAP.DIR,"/{scripts/irap,aux/mk/*.mk} | cut -f 2 -d= |head -n 1")
+  cmd <- paste0("grep -i '^def_",var,"' ",IRAP.DIR,"/aux/mk/*.mk | cut -f 2 -d= |head -n 1")
   #pinfo(cmd)
   val <- system(cmd,intern=TRUE)
   if ( is.null(val)) { return(NULL); }
