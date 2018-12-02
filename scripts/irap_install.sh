@@ -2220,6 +2220,13 @@ else
 fi
 
 # 
+if [ ! -e $SRC_DIR/version ]; then
+    echo "ERROR: iRAP's version file $SRC_DIR/version not found"
+    exit 1
+fi
+IRAP_VERSION=$(cat $SRC_DIR/version)
+pinfo "iRAP $IRAP_VERSION"
+
 # Check if env is available
 DEF_ENV="/usr/bin/env"
 ENV_FP=$DEF_ENV
@@ -2241,10 +2248,8 @@ check_dependencies
 # Full path
 pinfo "Checking paths..."
 #IRAP_DIR=$(realpath -f "$IRAP_DIR")
-IRAP_DIR=$(readlink -f "$IRAP_DIR")
 SRC_DIR=$(readlink -f "$SRC_DIR")
-IRAP_VERSION=$(cat $SRC_DIR/version)
-pinfo "iRAP $IRAP_VERSION"
+IRAP_DIR=$(readlink -f "$IRAP_DIR")
 pinfo "Checking paths...done."
 #############################################
 # print a few variables to help troubleshooting
