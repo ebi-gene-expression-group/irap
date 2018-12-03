@@ -2,7 +2,8 @@ FROM ubuntu:16.04
 # Update the image with the latest packages (recommended)
 # and install missing packages
 
-ENV IRAP_VERSION=1.0.4
+ENV DEBIAN_FRONTEND=noninteractive
+ENV IRAP_VERSION=1.0.5d
 
 LABEL iRAP.version="$IRAP_VERSION" maintainer="nuno.fonseca at gmail.com"
 
