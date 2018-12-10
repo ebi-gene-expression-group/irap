@@ -4,11 +4,11 @@ FROM ubuntu:16.04
 # and install missing packages
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV IRAP_VERSION=1.0.6d
+ENV IRAP_VERSION=1.0.5
 
 LABEL iRAP.version="$IRAP_VERSION" maintainer="nuno.fonseca at gmail.com"
 
 ADD build/irap_docker_setup.sh build
-RUN bash build ubuntu_16 $IRAP_VERSION full 
+RUN bash build ubuntu $IRAP_VERSION minimal
 
 #ENTRYPOINT ["irap"]
