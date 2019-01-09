@@ -21,8 +21,6 @@
 # TODO: create an object for the conf. information
 
 IRAP.DIR <- Sys.getenv(c("IRAP_DIR"))
-irap_version <- readLines(file.path(IRAP.DIR, 'version'))
-
 if ( IRAP.DIR == "" ) {
   cat("ERROR: environment variable IRAP_DIR is not set\n")
   q(status=1)
