@@ -195,6 +195,7 @@ for (p in perp.values) {
   par(bty="l",mar=c(4,4,1,8))
   plot(tsne[,c(1,2)])    
   dev.off()  
+
 }
 pinfo("All done.")
 q(status=0)
