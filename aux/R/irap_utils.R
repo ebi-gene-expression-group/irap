@@ -20,6 +20,7 @@
 # =========================================================
 # TODO: create an object for the conf. information
 
+
 IRAP.DIR <- Sys.getenv(c("IRAP_DIR"))
 if ( IRAP.DIR == "" ) {
   cat("ERROR: environment variable IRAP_DIR is not set\n")
