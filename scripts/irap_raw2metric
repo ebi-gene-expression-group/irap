@@ -186,7 +186,9 @@ lengths <- list(gene=gene.length,transcript=trans.length,exon=exon.length)
 if ( opt$feature=="transcript" && sum(grepl(".",rownames(table),fixed=TRUE))==nrow(table) && sum(grepl(".",names(trans.length),fixed=TRUE))==0 ) {
     pinfo("Applying Ensembl workaround...")
     rownames(table) <- gsub("\\.[0-9]+","",rownames(table))
-    mass.labels <- gsub("\\.[0-9]+","",mass.labels)
+    if (!is.null(mass.labels)) {
+        mass.labels <- gsub("\\.[0-9]+","",mass.labels)
+    }
     print(head(table))
 }
 ## Missing features in the GTF
